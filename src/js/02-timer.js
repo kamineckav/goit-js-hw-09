@@ -1,4 +1,4 @@
-import flatpickr from "flatpickr";
+import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
 
@@ -18,7 +18,6 @@ let futureDay = null;
 let id = null;
 let time = 0;
 refs.btn.setAttribute('disabled', 'true');
-refs.body.style.backgroundColor = 'rgba(137, 196, 255, 0.5)';
 
 flatpickr(refs.input, {
   enableTime: true,
@@ -29,7 +28,7 @@ flatpickr(refs.input, {
     futureDay = selectedDates[0].getTime();
     currentDay = new Date();
     if (futureDay - currentDay < 1000) {
-      Notiflix.Notify.info('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future');
     } else {
       refs.btn.removeAttribute('disabled');
       Notiflix.Notify.info('You choose a date');
@@ -41,7 +40,7 @@ function onClick() {
   id = setInterval(() => {
     currentDay = new Date().getTime();
     if (futureDay - currentDay < 1000) {
-      Notiflix.Notify.info('The time is up!');
+      Notiflix.Notify.success('The time is up!');
       clearInterval(id);
     } else {
       currentDay += 1000;
@@ -50,6 +49,7 @@ function onClick() {
       convertMs(time);
     }
   }, 1000);
+  refs.btn.setAttribute('disabled', 'true');
 }
 
 function convertMs(ms) {
